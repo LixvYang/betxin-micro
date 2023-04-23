@@ -1,0 +1,20 @@
+Name: usersrv.rpc
+ListenOn: 0.0.0.0:8080
+# Etcd:
+#   Hosts:
+#   - 127.0.0.1:2379
+#   Key: usersrv.rpc
+
+
+Mysql:
+  DataSource: 
+
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass: 
+    Type: node
+
+Consul:
+  Host: 127.0.0.1:8500
+  Key: consul-user.rpc
+

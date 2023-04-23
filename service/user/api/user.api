@@ -1,0 +1,73 @@
+info(
+	title: "user-api"
+	desc: "user api betxin.one"
+	author: "lixin"
+	email: @betixn.one
+	version: 1.0
+)
+
+type Errmsg {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
+type User {
+	IdentityNumber string `json:"identity_number"`
+	Uid            string `json:"uid"`
+	FullName       string `json:"full_name"`
+	AvatarUrl      string `json:"avatar_url"`
+	Biography      string `json:"biography"`
+}
+
+type CreateUserReq {
+	IdentityNumber string `json:"identity_number"`
+	Uid            string `json:"uid"`
+	FullName       string `json:"full_name"`
+	AvatarUrl      string `json:"avatar_url"`
+	Biography      string `json:"biography"`
+}
+
+type CreateUserResp {
+	Errmsg
+	Data string `json:"data"`
+}
+
+// 定义没有jwt的api 主要是用户认证
+@server(
+	group: oauth
+	prefix: /api/v1
+)
+service user-api {
+	@doc(
+		summary: 定义用户认证接口
+	)
+	@handler OauthHandler
+	get /oauth/redirect
+}
+
+// 定义已经没有jwt的api
+@server(
+	group: user
+	prefix: /api/v1
+)
+service user-api {
+	@doc(
+		summary: 创建一个用户
+	)
+	@handler CreateUserHandler
+	post /user (CreateUserReq) returns (CreateUserResp)
+}
+
+// 定义已经有jwt的api
+@server(
+	jwt: Auth
+	group: user
+	prefix: /api/v1
+)
+service user-api {
+	@doc(
+		summary: "根据用户uid去获取用户信息"
+	)
+	@handler GetUserHandler
+	get /user returns (User)
+}

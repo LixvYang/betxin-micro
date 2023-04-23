@@ -1,0 +1,57 @@
+info(
+	title:
+	desc:
+	author:
+	email: @betxin.one
+	version: 1.0
+)
+
+import "errmsg.api"
+import "category.api"
+
+type Topic {
+	Id           int64    `json:"id"`
+	Tid          string    `json:"tid"`
+	Cid          uint64       `json:"cid"`
+	Category     *Category `json:"category"`
+	Title        string    `json:"title"`
+	Intro        string    `json:"intro"`
+	Content      string    `json:"content"`
+	YesRatio     float64   `json:"yes_ratio"`
+	NoRatio      float64   `json:"no_ratio"`
+	YesPrice     float64   `json:"yes_ratio_price"`
+	NoPrice      float64   `json:"no_ratio_price"`
+	TotalPrice   float64   `json:"total_price"`
+	CollectCount uint64      `json:"collect_count"`
+	ReadCount    uint64      `json:"read_count"`
+	ImgUrl       string    `json:"img_url"`
+	IsStop       int64      `json:"is_stop"`
+	EndTime      int64    `json:"end_time"`
+
+	CreatedAt int64 `json:"created_at"`
+	UpdatedAt int64 `json:"updated_at"`
+	DeletedAt int64 `json:"deleted_at"`
+}
+
+type ListTopicByCidReq {
+	Cid uint64 `path:"cid"`
+}
+
+type ListTopicByCidResp {
+	Errmsg
+	Data []Topic `json:"data"`
+}
+
+
+// 定义已经没有jwt的topic api
+@server(
+	group: topic
+	prefix: /api/v1
+)
+service topic-api {
+	@doc(
+		summary: 根据cid获取topic列表
+	)
+	@handler ListTopicByCidHandler
+	get /topic/:cid (ListTopicByCidReq) returns (ListTopicByCidResp)
+}

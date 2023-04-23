@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+option go_package ="./pb";
+
+package pb;
+
+
+
+// ------------------------------------ 
+// Rpc Func
+// ------------------------------------ 
+
+service usersrv{ 
+
+  //-----------------------user----------------------- 
+  rpc AddUser(AddUserReq) returns (AddUserResp); 
+  rpc UpdateUser(UpdateUserReq) returns (UpdateUserResp); 
+  rpc DelUser(DelUserReq) returns (DelUserResp); 
+  rpc GetUserById(GetUserByIdReq) returns (GetUserByIdResp); 
+  rpc GetUserByUid(GetUserByIdReq) returns (GetUserByIdResp); 
+  rpc SearchUser(SearchUserReq) returns (SearchUserResp); 
+
+}
+
+
+// ------------------------------------ 
+// Messages
+// ------------------------------------ 
+
+//--------------------------------user--------------------------------
+message User {
+  int64 id = 1; //id
+  string identity_number = 2; //identity_number
+  string uid = 3; //uid
+  string full_name = 4; //full_name
+  string avatar_url = 5; //avatar_url
+  string session_id = 6; //session_id
+  string biography = 7; //biography
+  int64 created_at = 8; //created_at
+  int64 updated_at = 9; //updated_at
+}
+
+message AddUserReq {
+  string identity_number = 1; //identity_number
+  string uid = 2; //uid
+  string full_name = 3; //full_name
+  string avatar_url = 4; //avatar_url
+  string session_id = 5; //session_id
+  string biography = 6; //biography
+  int64 created_at = 7; //created_at
+  int64 updated_at = 8; //updated_at
+}
+
+message AddUserResp {
+}
+
+message UpdateUserReq {
+  int64 id = 1; //id
+  string identity_number = 2; //identity_number
+  string uid = 3; //uid
+  string full_name = 4; //full_name
+  string avatar_url = 5; //avatar_url
+  string session_id = 6; //session_id
+  string biography = 7; //biography
+  int64 created_at = 8; //created_at
+  int64 updated_at = 9; //updated_at
+}
+
+message UpdateUserResp {
+}
+
+message DelUserReq {
+  int64 id = 1; //id
+}
+
+message DelUserResp {
+}
+
+message GetUserByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserByIdResp {
+  User user = 1; //user
+}
+
+message GetUserByUidReq {
+  int64 id = 1; //id
+}
+
+message GetUserByUidResp {
+  User user = 1; //user
+}
+
+message SearchUserReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  string identity_number = 4; //identity_number
+  string uid = 5; //uid
+  string full_name = 6; //full_name
+  string avatar_url = 7; //avatar_url
+  string session_id = 8; //session_id
+  string biography = 9; //biography
+  int64 created_at = 10; //created_at
+  int64 updated_at = 11; //updated_at
+}
+
+message SearchUserResp {
+  repeated User user = 1; //user
+}
+

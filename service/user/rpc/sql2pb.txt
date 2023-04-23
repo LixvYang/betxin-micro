@@ -1,0 +1,1 @@
+sql2pb -field_style sql_pb -go_package ./pb -host 127.0.0.1 -package pb -password 123456 -port 3306 -schema betxin -service_name usersrv -user root -table=user > usersrv.proto
