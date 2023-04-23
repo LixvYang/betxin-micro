@@ -19,6 +19,8 @@ type (
 	DelTopicResp     = pb.DelTopicResp
 	GetTopicByIdReq  = pb.GetTopicByIdReq
 	GetTopicByIdResp = pb.GetTopicByIdResp
+	ListTopicReq     = pb.ListTopicReq
+	ListTopicResp    = pb.ListTopicResp
 	SearchTopicReq   = pb.SearchTopicReq
 	SearchTopicResp  = pb.SearchTopicResp
 	Topic            = pb.Topic
@@ -32,6 +34,7 @@ type (
 		DelTopic(ctx context.Context, in *DelTopicReq, opts ...grpc.CallOption) (*DelTopicResp, error)
 		GetTopicById(ctx context.Context, in *GetTopicByIdReq, opts ...grpc.CallOption) (*GetTopicByIdResp, error)
 		SearchTopic(ctx context.Context, in *SearchTopicReq, opts ...grpc.CallOption) (*SearchTopicResp, error)
+		ListTopic(ctx context.Context, in *ListTopicReq, opts ...grpc.CallOption) (*ListTopicResp, error)
 	}
 
 	defaultTopicsrv struct {
@@ -69,4 +72,9 @@ func (m *defaultTopicsrv) GetTopicById(ctx context.Context, in *GetTopicByIdReq,
 func (m *defaultTopicsrv) SearchTopic(ctx context.Context, in *SearchTopicReq, opts ...grpc.CallOption) (*SearchTopicResp, error) {
 	client := pb.NewTopicsrvClient(m.cli.Conn())
 	return client.SearchTopic(ctx, in, opts...)
+}
+
+func (m *defaultTopicsrv) ListTopic(ctx context.Context, in *ListTopicReq, opts ...grpc.CallOption) (*ListTopicResp, error) {
+	client := pb.NewTopicsrvClient(m.cli.Conn())
+	return client.ListTopic(ctx, in, opts...)
 }

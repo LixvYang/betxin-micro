@@ -28,6 +28,7 @@ type TopicsrvClient interface {
 	DelTopic(ctx context.Context, in *DelTopicReq, opts ...grpc.CallOption) (*DelTopicResp, error)
 	GetTopicById(ctx context.Context, in *GetTopicByIdReq, opts ...grpc.CallOption) (*GetTopicByIdResp, error)
 	SearchTopic(ctx context.Context, in *SearchTopicReq, opts ...grpc.CallOption) (*SearchTopicResp, error)
+	ListTopic(ctx context.Context, in *ListTopicReq, opts ...grpc.CallOption) (*ListTopicResp, error)
 }
 
 type topicsrvClient struct {
@@ -83,6 +84,15 @@ func (c *topicsrvClient) SearchTopic(ctx context.Context, in *SearchTopicReq, op
 	return out, nil
 }
 
+func (c *topicsrvClient) ListTopic(ctx context.Context, in *ListTopicReq, opts ...grpc.CallOption) (*ListTopicResp, error) {
+	out := new(ListTopicResp)
+	err := c.cc.Invoke(ctx, "/pb.topicsrv/ListTopic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TopicsrvServer is the server API for Topicsrv service.
 // All implementations must embed UnimplementedTopicsrvServer
 // for forward compatibility
@@ -93,6 +103,7 @@ type TopicsrvServer interface {
 	DelTopic(context.Context, *DelTopicReq) (*DelTopicResp, error)
 	GetTopicById(context.Context, *GetTopicByIdReq) (*GetTopicByIdResp, error)
 	SearchTopic(context.Context, *SearchTopicReq) (*SearchTopicResp, error)
+	ListTopic(context.Context, *ListTopicReq) (*ListTopicResp, error)
 	mustEmbedUnimplementedTopicsrvServer()
 }
 
@@ -114,6 +125,9 @@ func (UnimplementedTopicsrvServer) GetTopicById(context.Context, *GetTopicByIdRe
 }
 func (UnimplementedTopicsrvServer) SearchTopic(context.Context, *SearchTopicReq) (*SearchTopicResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchTopic not implemented")
+}
+func (UnimplementedTopicsrvServer) ListTopic(context.Context, *ListTopicReq) (*ListTopicResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTopic not implemented")
 }
 func (UnimplementedTopicsrvServer) mustEmbedUnimplementedTopicsrvServer() {}
 
@@ -218,6 +232,24 @@ func _Topicsrv_SearchTopic_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Topicsrv_ListTopic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTopicReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TopicsrvServer).ListTopic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.topicsrv/ListTopic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TopicsrvServer).ListTopic(ctx, req.(*ListTopicReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Topicsrv_ServiceDesc is the grpc.ServiceDesc for Topicsrv service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -244,6 +276,10 @@ var Topicsrv_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchTopic",
 			Handler:    _Topicsrv_SearchTopic_Handler,
+		},
+		{
+			MethodName: "ListTopic",
+			Handler:    _Topicsrv_ListTopic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

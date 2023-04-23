@@ -26,3 +26,8 @@ type CreateUserResp struct {
 	Errmsg
 	Data string `json:"data"`
 }
+
+type GetUserListResp struct {
+	Errmsg
+	Data []User `json:"data"`
+}

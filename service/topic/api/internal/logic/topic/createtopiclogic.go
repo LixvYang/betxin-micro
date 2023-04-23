@@ -25,6 +25,6 @@ func NewCreateTopicLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Creat
 
 func (l *CreateTopicLogic) CreateTopic(req *types.CreateTopicReq) (resp *types.CreateTopicResp, err error) {
 	// todo: add your logic here and delete this line
-
+	
 	return
 }

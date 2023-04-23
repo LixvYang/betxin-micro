@@ -1,4 +1,4 @@
-package oauth
+package user
 
 import (
 	"context"
@@ -9,22 +9,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type CreateUserLogic struct {
+type GetUserListLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewCreateUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateUserLogic {
-	return &CreateUserLogic{
+func NewGetUserListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserListLogic {
+	return &GetUserListLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *CreateUserLogic) CreateUser(req *types.CreateUserReq) (resp *types.CreateUserResp, err error) {
+func (l *GetUserListLogic) GetUserList() (resp *types.GetUserListResp, err error) {
 	// todo: add your logic here and delete this line
-
 	return
 }

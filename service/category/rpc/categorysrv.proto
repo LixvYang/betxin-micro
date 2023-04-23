@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+option go_package ="./pb";
+
+package pb;
+
+// ------------------------------------ 
+// Messages
+// ------------------------------------ 
+
+//--------------------------------category--------------------------------
+message Category {
+  int64 id = 1; //id
+  string category_name = 2; //category_name
+}
+
+message AddCategoryReq {
+  string category_name = 1; //category_name
+}
+
+message AddCategoryResp {
+}
+
+message UpdateCategoryReq {
+  int64 id = 1; //id
+  string category_name = 2; //category_name
+}
+
+message UpdateCategoryResp {
+}
+
+message DelCategoryReq {
+  int64 id = 1; //id
+}
+
+message DelCategoryResp {
+}
+
+message GetCategoryByIdReq {
+  int64 id = 1; //id
+}
+
+message GetCategoryByIdResp {
+  Category category = 1; //category
+}
+
+message SearchCategoryReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  string category_name = 4; //category_name
+}
+
+message SearchCategoryResp {
+  repeated Category category = 1; //category
+}
+
+
+
+// ------------------------------------ 
+// Rpc Func
+// ------------------------------------ 
+
+service categorysrv{ 
+
+	 //-----------------------category----------------------- 
+	 rpc AddCategory(AddCategoryReq) returns (AddCategoryResp); 
+	 rpc UpdateCategory(UpdateCategoryReq) returns (UpdateCategoryResp); 
+	 rpc DelCategory(DelCategoryReq) returns (DelCategoryResp); 
+	 rpc GetCategoryById(GetCategoryByIdReq) returns (GetCategoryByIdResp); 
+	 rpc SearchCategory(SearchCategoryReq) returns (SearchCategoryResp); 
+
+}

@@ -4,16 +4,15 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/lixvyang/betxin-micro/service/topic/api/internal/config"
-	"github.com/lixvyang/betxin-micro/service/topic/api/internal/handler"
-	"github.com/lixvyang/betxin-micro/service/topic/api/internal/svc"
+	"github.com/lixvyang/betxin-micro/service/category/api/internal/config"
+	"github.com/lixvyang/betxin-micro/service/category/api/internal/handler"
+	"github.com/lixvyang/betxin-micro/service/category/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
-	_ "github.com/zeromicro/zero-contrib/zrpc/registry/consul"
 )
 
-var configFile = flag.String("f", "etc/topic-api.yaml", "the config file")
+var configFile = flag.String("f", "etc/category-api.yaml", "the config file")
 
 func main() {
 	flag.Parse()

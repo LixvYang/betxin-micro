@@ -71,3 +71,23 @@ service user-api {
 	@handler GetUserHandler
 	get /user returns (User)
 }
+
+// 定义管理员用户权限
+@server(
+	jwt: Auth
+	group: user
+	prefix: /api/v1/admin
+	middleware: Admin
+)
+service user-api {
+	@doc(
+		summary: 查看用户列表
+	)
+	@handler GetUserListHandler
+	get /user returns (GetUserListResp)
+}
+
+type GetUserListResp {
+	Errmsg
+	Data []User `json:"data"`
+}

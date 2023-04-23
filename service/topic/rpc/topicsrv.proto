@@ -123,6 +123,13 @@ message SearchTopicResp {
   repeated Topic topic = 1; //topic
 }
 
+message ListTopicReq {
+  string uid = 1;
+}
+
+message ListTopicResp {
+  repeated Topic Topic = 1;
+}
 
 
 // ------------------------------------ 
@@ -137,5 +144,5 @@ service topicsrv{
 	 rpc DelTopic(DelTopicReq) returns (DelTopicResp); 
 	 rpc GetTopicById(GetTopicByIdReq) returns (GetTopicByIdResp); 
 	 rpc SearchTopic(SearchTopicReq) returns (SearchTopicResp); 
-
+   rpc ListTopic (ListTopicReq) returns (ListTopicResp);
 }

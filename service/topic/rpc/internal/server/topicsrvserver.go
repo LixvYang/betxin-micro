@@ -47,3 +47,8 @@ func (s *TopicsrvServer) SearchTopic(ctx context.Context, in *pb.SearchTopicReq)
 	l := logic.NewSearchTopicLogic(ctx, s.svcCtx)
 	return l.SearchTopic(in)
 }
+
+func (s *TopicsrvServer) ListTopic(ctx context.Context, in *pb.ListTopicReq) (*pb.ListTopicResp, error) {
+	l := logic.NewListTopicLogic(ctx, s.svcCtx)
+	return l.ListTopic(in)
+}

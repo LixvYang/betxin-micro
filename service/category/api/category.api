@@ -9,7 +9,7 @@ info(
 import "errmsg.api"
 
 type Category {
-	Id           uint64 `json:"id"`
+	Id           int64  `json:"id"`
 	CategoryName string `json:"category_name"`
 }
 
@@ -38,6 +38,7 @@ service category-api {
 	group: category
 	prefix: /api/v1
 	jwt: Auth
+	middleware: Admin
 )
 service category-api {
 	@doc(
@@ -62,7 +63,7 @@ type ListCategoryResp {
 }
 
 type GetCategoryReq {
-	Id uint64 `path:"id"`
+	Id int64 `path:"id"`
 }
 
 type GetCategoryResp {
