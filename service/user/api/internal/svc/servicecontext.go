@@ -1,9 +1,12 @@
 package svc
 
 import (
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"github.com/zeromicro/go-zero/zrpc"
+
+	"github.com/lixvyang/betxin-micro/service/topic/rpc/topicsrv"
 	"github.com/lixvyang/betxin-micro/service/user/api/internal/config"
 	"github.com/lixvyang/betxin-micro/service/user/model"
-	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
 type ServiceContext struct {
@@ -15,6 +18,8 @@ type ServiceContext struct {
 	}
 
 	UserModel model.UserModel
+
+	TopicRPC topicsrv.Topicsrv
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -23,5 +28,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config:    c,
 		UserModel: model.NewUserModel(conn, c.CacheRedis),
+		TopicRPC:  topicsrv.NewTopicsrv(zrpc.MustNewClient(c.TopicRPC)),
 	}
 }

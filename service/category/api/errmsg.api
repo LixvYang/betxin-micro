@@ -1,0 +1,12 @@
+info(
+  title: 
+  desc: 
+  author: 
+  email: @betxin.one
+  version: 1.0
+)
+
+type Errmsg {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}

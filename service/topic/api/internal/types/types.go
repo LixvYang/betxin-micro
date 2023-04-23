@@ -58,6 +58,64 @@ type ListTopicResp struct {
 	Data []Topic `json:"data"`
 }
 
+type ListTopicByCidReq struct {
+	Cid uint64 `path:"cid"`
+}
+
+type ListTopicByCidResp struct {
+	Errmsg
+	Data []Topic `json:"data"`
+}
+
+type GetTopicByTidReq struct {
+	Tid string `path:"tid"`
+}
+
+type GetTopicByTidResp struct {
+	Errmsg
+	Data Topic `json:"data"`
+}
+
+type SearchTopicReq struct {
+	Title   string `form:"title,optional"`
+	Intro   string `form:"intro,optional"`
+	Content string `form:"content,optional"`
+}
+
+type SearchTopicResp struct {
+	Errmsg
+	Data []Topic `json:"data"`
+}
+
+type UpdateTopicReq struct {
+	Topic Topic `json:"topic"`
+}
+
+type UpdateTopicResp struct {
+	Errmsg
+	Data string `json:"data"`
+}
+
+type UpdateTopicPriceReq struct {
+	Select int64   `json:"select,options=0|1" comment:"0 YES 1 No"`
+	Action int64   `json:"action,options=0|1" comment:"0 buy 1 sell"`
+	Amount float64 `json:"amount"`
+}
+
+type UpdateTopicPriceResp struct {
+	Errmsg
+	Data string `json:"data"`
+}
+
+type StopTopicReq struct {
+	Tid string `json:"tid"`
+}
+
+type StopTopicResp struct {
+	Errmsg
+	Data string `json:"data"`
+}
+
 type Errmsg struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`

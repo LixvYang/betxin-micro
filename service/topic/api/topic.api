@@ -7,12 +7,16 @@ info(
 )
 
 import "errmsg.api"
-import "category.api"
+
+type Category {
+	Id           uint64 `json:"id"`
+	CategoryName string `json:"category_name"`
+}
 
 type Topic {
-	Id           int64    `json:"id"`
+	Id           int64     `json:"id"`
 	Tid          string    `json:"tid"`
-	Cid          uint64       `json:"cid"`
+	Cid          uint64    `json:"cid"`
 	Category     *Category `json:"category"`
 	Title        string    `json:"title"`
 	Intro        string    `json:"intro"`
@@ -22,26 +26,16 @@ type Topic {
 	YesPrice     float64   `json:"yes_ratio_price"`
 	NoPrice      float64   `json:"no_ratio_price"`
 	TotalPrice   float64   `json:"total_price"`
-	CollectCount uint64      `json:"collect_count"`
-	ReadCount    uint64      `json:"read_count"`
+	CollectCount uint64    `json:"collect_count"`
+	ReadCount    uint64    `json:"read_count"`
 	ImgUrl       string    `json:"img_url"`
-	IsStop       int64      `json:"is_stop"`
-	EndTime      int64    `json:"end_time"`
+	IsStop       int64     `json:"is_stop"`
+	EndTime      int64     `json:"end_time"`
 
 	CreatedAt int64 `json:"created_at"`
 	UpdatedAt int64 `json:"updated_at"`
 	DeletedAt int64 `json:"deleted_at"`
 }
-
-type ListTopicByCidReq {
-	Cid uint64 `path:"cid"`
-}
-
-type ListTopicByCidResp {
-	Errmsg
-	Data []Topic `json:"data"`
-}
-
 
 // 定义已经没有jwt的topic api
 @server(
@@ -54,4 +48,153 @@ service topic-api {
 	)
 	@handler ListTopicByCidHandler
 	get /topic/:cid (ListTopicByCidReq) returns (ListTopicByCidResp)
+	@doc(
+		summary: 根据tid获取topic
+	)
+	@handler GetTopicByTidHandler
+	get /topic/:tid (GetTopicByTidReq) returns (GetTopicByTidResp)
+	@doc(
+		summary: 查询话题列表
+	)
+	@handler SearchTopicHandler
+	get /topic/search (SearchTopicReq) returns (SearchTopicResp)
+}
+
+// 定义jwt权限
+@server(
+	group: topic
+	prefix: /api/v1
+	jwt: Auth
+)
+service topic-api {
+	@doc(
+		summary: 更新话题价格
+	)
+	@handler UpdateTopicPriceHandler
+	patch /topic/:tid (UpdateTopicPriceReq) returns (UpdateTopicPriceResp)
+}
+
+// 定义管理员有的权限
+@server(
+	group: topic
+	prefix: /api/v1
+	jwt: Auth
+)
+service topic-api {
+	@doc(
+		summary: 创建话题
+	)
+	@handler CreateTopicHandler
+	post /topic (CreateTopicReq) returns (CreateTopicResp)
+	
+	@doc(
+		summary: 删除话题
+	)
+	@handler DeleteTopicHandler
+	delete /topic (DeleteTopicReq) returns(DeleteTopicResp)
+	
+	@doc(
+		summary: 列出所有的话题
+	)
+	@handler ListTopicHandler
+	get /topic returns (ListTopicResp)
+	
+	@doc(
+		summary: 更新话题内容
+	)
+	@handler UpdateTopicHandler
+	put /topic (UpdateTopicReq) returns (UpdateTopicResp)
+	
+	@doc(
+		summary: 停止话题
+	)
+	@handler StopTopicHandler
+	post /topic/:tid/stop (StopTopicReq) returns(StopTopicResp)
+}
+
+type CreateTopicReq {
+	Cid     uint64 `json:"cid"`
+	Tid     string `json:"tid"`
+	Title   string `json:"title"`
+	Intro   string `json:"intro"`
+	Content string `json:"content"`
+	ImgUrl  string `json:"img_url"`
+	EndTime int64  `json:"end_time"`
+}
+
+type CreateTopicResp {
+	Errmsg
+	Data Topic `json:"data"`
+}
+
+type DeleteTopicReq {
+	Tid string `json:"tid"`
+}
+
+type DeleteTopicResp {
+	Errmsg
+	Data *string `json:"data"`
+}
+
+type ListTopicResp {
+	Errmsg
+	Data []Topic `json:"data"`
+}
+
+type ListTopicByCidReq {
+	Cid uint64 `path:"cid"`
+}
+
+type ListTopicByCidResp {
+	Errmsg
+	Data []Topic `json:"data"`
+}
+
+type GetTopicByTidReq {
+	Tid string `path:"tid"`
+}
+
+type GetTopicByTidResp {
+	Errmsg
+	Data Topic `json:"data"`
+}
+
+type SearchTopicReq {
+	Title   string `form:"title,optional"`
+	Intro   string `form:"intro,optional"`
+	Content string `form:"content,optional"`
+}
+
+type SearchTopicResp {
+	Errmsg
+	Data []Topic `json:"data"`
+}
+
+type UpdateTopicReq {
+	Topic Topic `json:"topic"`
+}
+
+type UpdateTopicResp {
+	Errmsg
+	Data string `json:"data"`
+}
+
+type UpdateTopicPriceReq {
+	Select int64   `json:"select,options=0|1" comment:"0 YES 1 No"`
+	Action int64   `json:"action,options=0|1" comment:"0 buy 1 sell"`
+	Amount float64 `json:"amount"`
+}
+
+type UpdateTopicPriceResp {
+	Errmsg
+	Data string `json:"data"`
+}
+
+type StopTopicReq {
+	Tid string `json:"tid"`
+}
+
+type StopTopicResp {
+	Errmsg
+	Data string `json:"data"`
 }

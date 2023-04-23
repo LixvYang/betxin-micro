@@ -1,0 +1,141 @@
+syntax = "proto3";
+
+option go_package ="./pb";
+
+package pb;
+
+// ------------------------------------ 
+// Messages
+// ------------------------------------ 
+
+//--------------------------------topic--------------------------------
+message Topic {
+  int64 id = 1; //id
+  string tid = 2; //tid
+  int64 cid = 3; //cid
+  string title = 4; //title
+  string intro = 5; //intro
+  string content = 6; //content
+  double yes_ratio = 7; //yes_ratio
+  double no_ratio = 8; //no_ratio
+  double yes_price = 9; //yes_price
+  double no_price = 10; //no_price
+  double total_price = 11; //total_price
+  int64 collect_count = 12; //collect_count
+  int64 read_count = 13; //read_count
+  string img_url = 14; //img_url
+  int64 is_stop = 15; //is_stop
+  int64 refund_end_time = 16; //refund_end_time
+  int64 created_at = 17; //created_at
+  int64 updated_at = 18; //updated_at
+  int64 deleted_at = 19; //deleted_at
+}
+
+message AddTopicReq {
+  string tid = 1; //tid
+  int64 cid = 2; //cid
+  string title = 3; //title
+  string intro = 4; //intro
+  string content = 5; //content
+  double yes_ratio = 6; //yes_ratio
+  double no_ratio = 7; //no_ratio
+  double yes_price = 8; //yes_price
+  double no_price = 9; //no_price
+  double total_price = 10; //total_price
+  int64 collect_count = 11; //collect_count
+  int64 read_count = 12; //read_count
+  string img_url = 13; //img_url
+  int64 is_stop = 14; //is_stop
+  int64 refund_end_time = 15; //refund_end_time
+  int64 created_at = 16; //created_at
+  int64 updated_at = 17; //updated_at
+  int64 deleted_at = 18; //deleted_at
+}
+
+message AddTopicResp {
+}
+
+message UpdateTopicReq {
+  int64 id = 1; //id
+  string tid = 2; //tid
+  int64 cid = 3; //cid
+  string title = 4; //title
+  string intro = 5; //intro
+  string content = 6; //content
+  double yes_ratio = 7; //yes_ratio
+  double no_ratio = 8; //no_ratio
+  double yes_price = 9; //yes_price
+  double no_price = 10; //no_price
+  double total_price = 11; //total_price
+  int64 collect_count = 12; //collect_count
+  int64 read_count = 13; //read_count
+  string img_url = 14; //img_url
+  int64 is_stop = 15; //is_stop
+  int64 refund_end_time = 16; //refund_end_time
+  int64 created_at = 17; //created_at
+  int64 updated_at = 18; //updated_at
+  int64 deleted_at = 19; //deleted_at
+}
+
+message UpdateTopicResp {
+}
+
+message DelTopicReq {
+  int64 id = 1; //id
+}
+
+message DelTopicResp {
+}
+
+message GetTopicByIdReq {
+  int64 id = 1; //id
+}
+
+message GetTopicByIdResp {
+  Topic topic = 1; //topic
+}
+
+message SearchTopicReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  string tid = 4; //tid
+  int64 cid = 5; //cid
+  string title = 6; //title
+  string intro = 7; //intro
+  string content = 8; //content
+  double yes_ratio = 9; //yes_ratio
+  double no_ratio = 10; //no_ratio
+  double yes_price = 11; //yes_price
+  double no_price = 12; //no_price
+  double total_price = 13; //total_price
+  int64 collect_count = 14; //collect_count
+  int64 read_count = 15; //read_count
+  string img_url = 16; //img_url
+  int64 is_stop = 17; //is_stop
+  int64 refund_end_time = 18; //refund_end_time
+  int64 created_at = 19; //created_at
+  int64 updated_at = 20; //updated_at
+  int64 deleted_at = 21; //deleted_at
+}
+
+message SearchTopicResp {
+  repeated Topic topic = 1; //topic
+}
+
+
+
+// ------------------------------------ 
+// Rpc Func
+// ------------------------------------ 
+
+service topicsrv{ 
+
+	 //-----------------------topic----------------------- 
+	 rpc AddTopic(AddTopicReq) returns (AddTopicResp); 
+	 rpc UpdateTopic(UpdateTopicReq) returns (UpdateTopicResp); 
+	 rpc DelTopic(DelTopicReq) returns (DelTopicResp); 
+	 rpc GetTopicById(GetTopicByIdReq) returns (GetTopicByIdResp); 
+	 rpc SearchTopic(SearchTopicReq) returns (SearchTopicResp); 
+
+}

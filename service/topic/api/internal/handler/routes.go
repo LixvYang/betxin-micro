@@ -14,6 +14,39 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				Method:  http.MethodGet,
+				Path:    "/topic/:cid",
+				Handler: topic.ListTopicByCidHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/topic/:tid",
+				Handler: topic.GetTopicByTidHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/topic/search",
+				Handler: topic.SearchTopicHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPatch,
+				Path:    "/topic/:tid",
+				Handler: topic.UpdateTopicPriceHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
 				Method:  http.MethodPost,
 				Path:    "/topic",
 				Handler: topic.CreateTopicHandler(serverCtx),
@@ -27,6 +60,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/topic",
 				Handler: topic.ListTopicHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/topic",
+				Handler: topic.UpdateTopicHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/topic/:tid/stop",
+				Handler: topic.StopTopicHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
