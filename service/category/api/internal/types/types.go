@@ -26,7 +26,7 @@ type GetCategoryReq struct {
 
 type GetCategoryResp struct {
 	Errmsg
-	Data Category `json:"data"`
+	Data *Category `json:"data"`
 }
 
 type Errmsg struct {

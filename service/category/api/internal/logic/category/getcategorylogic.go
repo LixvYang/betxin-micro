@@ -3,6 +3,7 @@ package category
 import (
 	"context"
 
+	"github.com/lixvyang/betxin-micro/common/errmsg"
 	"github.com/lixvyang/betxin-micro/service/category/api/internal/svc"
 	"github.com/lixvyang/betxin-micro/service/category/api/internal/types"
 
@@ -24,6 +25,7 @@ func NewGetCategoryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetCa
 }
 
 func (l *GetCategoryLogic) GetCategory(req *types.GetCategoryReq) (resp *types.GetCategoryResp, err error) {
+
 	category, err := l.svcCtx.CategoryModel.FindOne(l.ctx, req.Id)
 	if err != nil {
 		logx.Errorw("error: ", logx.LogField{Key: "CategoryModel.FindOne error", Value: err})
@@ -32,9 +34,9 @@ func (l *GetCategoryLogic) GetCategory(req *types.GetCategoryReq) (resp *types.G
 
 	return &types.GetCategoryResp{
 		Errmsg: types.Errmsg{
-			Code:    200,
-			Message: "ok",
+			Code:    errmsg.CATEGORY_NOT_FOUND,
+			Message: errmsg.GetErrMsg(errmsg.CATEGORY_NOT_FOUND),
 		},
-		Data: types.Category(*category),
+		Data: (*types.Category)(category),
 	}, nil
 }

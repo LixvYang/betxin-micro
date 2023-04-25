@@ -24,7 +24,6 @@ func NewGetCategoryByIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *G
 }
 
 func (l *GetCategoryByIdLogic) GetCategoryById(in *pb.GetCategoryByIdReq) (*pb.GetCategoryByIdResp, error) {
-	// todo: add your logic here and delete this line
 	cate, err := l.svcCtx.CategoryModel.FindOne(l.ctx, in.GetId())
 	if err != nil {
 		logx.Errorw("error: ", logx.LogField{Value: err, Key: "CategoryModel.FindOne "})

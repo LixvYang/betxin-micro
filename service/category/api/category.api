@@ -68,5 +68,5 @@ type GetCategoryReq {
 
 type GetCategoryResp {
 	Errmsg
-	Data Category `json:"data"`
+	Data *Category `json:"data"`
 }
