@@ -47,3 +47,8 @@ func (s *CategorysrvServer) SearchCategory(ctx context.Context, in *pb.SearchCat
 	l := logic.NewSearchCategoryLogic(ctx, s.svcCtx)
 	return l.SearchCategory(in)
 }
+
+func (s *CategorysrvServer) ListCategory(ctx context.Context, in *pb.ListCategoryReq) (*pb.ListCategoryResp, error) {
+	l := logic.NewListCategoryLogic(ctx, s.svcCtx)
+	return l.ListCategory(in)
+}

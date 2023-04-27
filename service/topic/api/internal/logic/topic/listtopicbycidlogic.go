@@ -27,12 +27,12 @@ func NewListTopicByCidLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Li
 
 func (l *ListTopicByCidLogic) ListTopicByCid(req *types.ListTopicByCidReq) (resp *types.ListTopicByCidResp, err error) {
 	// todo: add your logic here and delete this line
-	res, err := l.svcCtx.CategoryRPC.GetCategoryById(l.ctx, &pb.GetCategoryByIdReq{Id: 1})
+	list, err := l.svcCtx.CategoryRPC.ListCategory(l.ctx, &pb.ListCategoryReq{})
 	if err != nil {
-		logx.Errorw("failed: ", logx.LogField{Value: err, Key: "Error"})
-		return nil, err
+		panic(err)
 	}
-
-	fmt.Println(res.Category)
+	for _, l := range list.Category {
+		fmt.Println(*l)
+	}
 	return
 }

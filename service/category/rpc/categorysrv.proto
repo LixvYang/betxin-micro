@@ -55,6 +55,12 @@ message SearchCategoryResp {
   repeated Category category = 1; //category
 }
 
+message ListCategoryReq {
+}
+
+message ListCategoryResp {
+  repeated Category category = 1; //category
+}
 
 
 // ------------------------------------ 
@@ -69,5 +75,5 @@ service categorysrv{
 	 rpc DelCategory(DelCategoryReq) returns (DelCategoryResp); 
 	 rpc GetCategoryById(GetCategoryByIdReq) returns (GetCategoryByIdResp); 
 	 rpc SearchCategory(SearchCategoryReq) returns (SearchCategoryResp); 
-
+   rpc ListCategory(ListCategoryReq) returns (ListCategoryResp);
 }

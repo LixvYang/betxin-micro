@@ -45,33 +45,36 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	)
 
 	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/topic",
-				Handler: topic.CreateTopicHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodDelete,
-				Path:    "/topic",
-				Handler: topic.DeleteTopicHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/topic",
-				Handler: topic.ListTopicHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPut,
-				Path:    "/topic",
-				Handler: topic.UpdateTopicHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/topic/:tid/stop",
-				Handler: topic.StopTopicHandler(serverCtx),
-			},
-		},
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Admin},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/topic",
+					Handler: topic.CreateTopicHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodDelete,
+					Path:    "/topic",
+					Handler: topic.DeleteTopicHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/topic",
+					Handler: topic.ListTopicHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPut,
+					Path:    "/topic",
+					Handler: topic.UpdateTopicHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/topic/:tid/stop",
+					Handler: topic.StopTopicHandler(serverCtx),
+				},
+			}...,
+		),
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/v1"),
 	)

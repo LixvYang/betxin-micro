@@ -30,6 +30,7 @@ type (
 		FindOne(ctx context.Context, id int64) (*Category, error)
 		Update(ctx context.Context, data *Category) error
 		Delete(ctx context.Context, id int64) error
+		List(ctx context.Context) ([]Category, error)
 	}
 
 	defaultCategoryModel struct {
@@ -57,6 +58,20 @@ func (m *defaultCategoryModel) Delete(ctx context.Context, id int64) error {
 		return conn.ExecCtx(ctx, query, id)
 	}, betxinCategoryIdKey)
 	return err
+}
+
+func (m *defaultCategoryModel) List(ctx context.Context) ([]Category, error) {
+	var resp []Category
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, fmt.Sprintf("select * from %s", m.table))
+
+	switch err {
+	case nil:
+		return resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
 }
 
 func (m *defaultCategoryModel) FindOne(ctx context.Context, id int64) (*Category, error) {

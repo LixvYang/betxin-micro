@@ -41,7 +41,7 @@ type CreateTopicReq struct {
 
 type CreateTopicResp struct {
 	Errmsg
-	Data Topic `json:"data"`
+	Data *Topic `json:"data"`
 }
 
 type DeleteTopicReq struct {
@@ -73,7 +73,7 @@ type GetTopicByTidReq struct {
 
 type GetTopicByTidResp struct {
 	Errmsg
-	Data Topic `json:"data"`
+	Data *Topic `json:"data"`
 }
 
 type SearchTopicReq struct {
@@ -93,7 +93,7 @@ type UpdateTopicReq struct {
 
 type UpdateTopicResp struct {
 	Errmsg
-	Data string `json:"data"`
+	Data *string `json:"data"`
 }
 
 type UpdateTopicPriceReq struct {
@@ -104,7 +104,7 @@ type UpdateTopicPriceReq struct {
 
 type UpdateTopicPriceResp struct {
 	Errmsg
-	Data string `json:"data"`
+	Data *string `json:"data"`
 }
 
 type StopTopicReq struct {
@@ -113,7 +113,7 @@ type StopTopicReq struct {
 
 type StopTopicResp struct {
 	Errmsg
-	Data string `json:"data"`
+	Data *string `json:"data"`
 }
 
 type Errmsg struct {

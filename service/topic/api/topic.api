@@ -79,6 +79,7 @@ service topic-api {
 	group: topic
 	prefix: /api/v1
 	jwt: Auth
+	middleware: Admin
 )
 service topic-api {
 	@doc(
@@ -124,7 +125,7 @@ type CreateTopicReq {
 
 type CreateTopicResp {
 	Errmsg
-	Data Topic `json:"data"`
+	Data *Topic `json:"data"`
 }
 
 type DeleteTopicReq {
@@ -156,7 +157,7 @@ type GetTopicByTidReq {
 
 type GetTopicByTidResp {
 	Errmsg
-	Data Topic `json:"data"`
+	Data *Topic `json:"data"`
 }
 
 type SearchTopicReq {
@@ -176,7 +177,7 @@ type UpdateTopicReq {
 
 type UpdateTopicResp {
 	Errmsg
-	Data string `json:"data"`
+	Data *string `json:"data"`
 }
 
 type UpdateTopicPriceReq {
@@ -187,7 +188,7 @@ type UpdateTopicPriceReq {
 
 type UpdateTopicPriceResp {
 	Errmsg
-	Data string `json:"data"`
+	Data *string `json:"data"`
 }
 
 type StopTopicReq {
@@ -196,5 +197,5 @@ type StopTopicReq {
 
 type StopTopicResp {
 	Errmsg
-	Data string `json:"data"`
+	Data *string `json:"data"`
 }

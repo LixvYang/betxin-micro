@@ -28,6 +28,7 @@ type CategorysrvClient interface {
 	DelCategory(ctx context.Context, in *DelCategoryReq, opts ...grpc.CallOption) (*DelCategoryResp, error)
 	GetCategoryById(ctx context.Context, in *GetCategoryByIdReq, opts ...grpc.CallOption) (*GetCategoryByIdResp, error)
 	SearchCategory(ctx context.Context, in *SearchCategoryReq, opts ...grpc.CallOption) (*SearchCategoryResp, error)
+	ListCategory(ctx context.Context, in *ListCategoryReq, opts ...grpc.CallOption) (*ListCategoryResp, error)
 }
 
 type categorysrvClient struct {
@@ -83,6 +84,15 @@ func (c *categorysrvClient) SearchCategory(ctx context.Context, in *SearchCatego
 	return out, nil
 }
 
+func (c *categorysrvClient) ListCategory(ctx context.Context, in *ListCategoryReq, opts ...grpc.CallOption) (*ListCategoryResp, error) {
+	out := new(ListCategoryResp)
+	err := c.cc.Invoke(ctx, "/pb.categorysrv/ListCategory", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CategorysrvServer is the server API for Categorysrv service.
 // All implementations must embed UnimplementedCategorysrvServer
 // for forward compatibility
@@ -93,6 +103,7 @@ type CategorysrvServer interface {
 	DelCategory(context.Context, *DelCategoryReq) (*DelCategoryResp, error)
 	GetCategoryById(context.Context, *GetCategoryByIdReq) (*GetCategoryByIdResp, error)
 	SearchCategory(context.Context, *SearchCategoryReq) (*SearchCategoryResp, error)
+	ListCategory(context.Context, *ListCategoryReq) (*ListCategoryResp, error)
 	mustEmbedUnimplementedCategorysrvServer()
 }
 
@@ -114,6 +125,9 @@ func (UnimplementedCategorysrvServer) GetCategoryById(context.Context, *GetCateg
 }
 func (UnimplementedCategorysrvServer) SearchCategory(context.Context, *SearchCategoryReq) (*SearchCategoryResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchCategory not implemented")
+}
+func (UnimplementedCategorysrvServer) ListCategory(context.Context, *ListCategoryReq) (*ListCategoryResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCategory not implemented")
 }
 func (UnimplementedCategorysrvServer) mustEmbedUnimplementedCategorysrvServer() {}
 
@@ -218,6 +232,24 @@ func _Categorysrv_SearchCategory_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Categorysrv_ListCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCategoryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategorysrvServer).ListCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.categorysrv/ListCategory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategorysrvServer).ListCategory(ctx, req.(*ListCategoryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Categorysrv_ServiceDesc is the grpc.ServiceDesc for Categorysrv service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -244,6 +276,10 @@ var Categorysrv_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchCategory",
 			Handler:    _Categorysrv_SearchCategory_Handler,
+		},
+		{
+			MethodName: "ListCategory",
+			Handler:    _Categorysrv_ListCategory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

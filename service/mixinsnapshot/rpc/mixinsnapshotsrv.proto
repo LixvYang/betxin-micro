@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+option go_package ="./pb";
+
+package pb;
+
+// ------------------------------------ 
+// Messages
+// ------------------------------------ 
+
+//--------------------------------mixinsnapshot--------------------------------
+message Mixinsnapshot {
+  int64 id = 1; //id
+  string snapshot_id = 2; //snapshot_id
+  string trace_id = 3; //trace_id
+  string asset_id = 4; //asset_id
+  string opponent_id = 5; //opponent_id
+  double amount = 6; //amount
+  string memo = 7; //memo
+  string type = 8; //type
+  double opening_balance = 9; //opening_balance
+  double closing_balance = 10; //closing_balance
+  int64 created_at = 11; //created_at
+  int64 updated_at = 12; //updated_at
+}
+
+message AddMixinsnapshotReq {
+  string snapshot_id = 1; //snapshot_id
+  string trace_id = 2; //trace_id
+  string asset_id = 3; //asset_id
+  string opponent_id = 4; //opponent_id
+  double amount = 5; //amount
+  string memo = 6; //memo
+  string type = 7; //type
+  double opening_balance = 8; //opening_balance
+  double closing_balance = 9; //closing_balance
+  int64 created_at = 10; //created_at
+  int64 updated_at = 11; //updated_at
+}
+
+message AddMixinsnapshotResp {
+}
+
+message UpdateMixinsnapshotReq {
+  int64 id = 1; //id
+  string snapshot_id = 2; //snapshot_id
+  string trace_id = 3; //trace_id
+  string asset_id = 4; //asset_id
+  string opponent_id = 5; //opponent_id
+  double amount = 6; //amount
+  string memo = 7; //memo
+  string type = 8; //type
+  double opening_balance = 9; //opening_balance
+  double closing_balance = 10; //closing_balance
+  int64 created_at = 11; //created_at
+  int64 updated_at = 12; //updated_at
+}
+
+message UpdateMixinsnapshotResp {
+}
+
+message DelMixinsnapshotReq {
+  int64 id = 1; //id
+}
+
+message DelMixinsnapshotResp {
+}
+
+message GetMixinsnapshotByIdReq {
+  int64 id = 1; //id
+}
+
+message GetMixinsnapshotByIdResp {
+  Mixinsnapshot mixinsnapshot = 1; //mixinsnapshot
+}
+
+message SearchMixinsnapshotReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  string snapshot_id = 4; //snapshot_id
+  string trace_id = 5; //trace_id
+  string asset_id = 6; //asset_id
+  string opponent_id = 7; //opponent_id
+  double amount = 8; //amount
+  string memo = 9; //memo
+  string type = 10; //type
+  double opening_balance = 11; //opening_balance
+  double closing_balance = 12; //closing_balance
+  int64 created_at = 13; //created_at
+  int64 updated_at = 14; //updated_at
+}
+
+message SearchMixinsnapshotResp {
+  repeated Mixinsnapshot mixinsnapshot = 1; //mixinsnapshot
+}
+
+
+
+// ------------------------------------ 
+// Rpc Func
+// ------------------------------------ 
+
+service mixinsnapshotsrv{ 
+
+	 //-----------------------mixinsnapshot----------------------- 
+	 rpc AddMixinsnapshot(AddMixinsnapshotReq) returns (AddMixinsnapshotResp); 
+	 rpc UpdateMixinsnapshot(UpdateMixinsnapshotReq) returns (UpdateMixinsnapshotResp); 
+	 rpc DelMixinsnapshot(DelMixinsnapshotReq) returns (DelMixinsnapshotResp); 
+	 rpc GetMixinsnapshotById(GetMixinsnapshotByIdReq) returns (GetMixinsnapshotByIdResp); 
+	 rpc SearchMixinsnapshot(SearchMixinsnapshotReq) returns (SearchMixinsnapshotResp); 
+
+}

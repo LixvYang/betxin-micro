@@ -20,6 +20,8 @@ type (
 	DelCategoryResp     = pb.DelCategoryResp
 	GetCategoryByIdReq  = pb.GetCategoryByIdReq
 	GetCategoryByIdResp = pb.GetCategoryByIdResp
+	ListCategoryReq     = pb.ListCategoryReq
+	ListCategoryResp    = pb.ListCategoryResp
 	SearchCategoryReq   = pb.SearchCategoryReq
 	SearchCategoryResp  = pb.SearchCategoryResp
 	UpdateCategoryReq   = pb.UpdateCategoryReq
@@ -32,6 +34,7 @@ type (
 		DelCategory(ctx context.Context, in *DelCategoryReq, opts ...grpc.CallOption) (*DelCategoryResp, error)
 		GetCategoryById(ctx context.Context, in *GetCategoryByIdReq, opts ...grpc.CallOption) (*GetCategoryByIdResp, error)
 		SearchCategory(ctx context.Context, in *SearchCategoryReq, opts ...grpc.CallOption) (*SearchCategoryResp, error)
+		ListCategory(ctx context.Context, in *ListCategoryReq, opts ...grpc.CallOption) (*ListCategoryResp, error)
 	}
 
 	defaultCategorysrv struct {
@@ -69,4 +72,9 @@ func (m *defaultCategorysrv) GetCategoryById(ctx context.Context, in *GetCategor
 func (m *defaultCategorysrv) SearchCategory(ctx context.Context, in *SearchCategoryReq, opts ...grpc.CallOption) (*SearchCategoryResp, error) {
 	client := pb.NewCategorysrvClient(m.cli.Conn())
 	return client.SearchCategory(ctx, in, opts...)
+}
+
+func (m *defaultCategorysrv) ListCategory(ctx context.Context, in *ListCategoryReq, opts ...grpc.CallOption) (*ListCategoryResp, error) {
+	client := pb.NewCategorysrvClient(m.cli.Conn())
+	return client.ListCategory(ctx, in, opts...)
 }
